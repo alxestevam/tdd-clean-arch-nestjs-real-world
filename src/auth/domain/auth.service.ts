@@ -6,6 +6,8 @@ import { EmailIsTakenError } from './errors/email-is-taken.error';
 import { PasswordIsMissingError } from './errors/password-is-missing.error';
 import { UserSignInRequest } from './user-sign-in.request';
 import { InvalidCredentialsError } from './errors/invalid-credentials.error';
+import { User } from './users.entity';
+import jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +26,7 @@ export class AuthService {
     }
 
     return {
-      token: 'token',
+      token: this.createTokenFor(user),
     };
   }
 
@@ -35,7 +37,16 @@ export class AuthService {
 
     await this.validatePassword(dto.password);
 
-    return this.usersRepository.save(dto);
+    const user = await this.usersRepository.save(dto);
+
+    return {
+      user,
+      token: this.createTokenFor(user),
+    };
+  }
+
+  private createTokenFor(user: User) {
+    return jwt.sign({ sub: user.username }, 'secret');
   }
 
   private async validatePassword(password: string) {

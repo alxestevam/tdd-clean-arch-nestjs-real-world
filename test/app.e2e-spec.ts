@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { configure } from '../src/config/bootstrap';
 
@@ -15,13 +15,6 @@ describe('AppController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     configure(app);
     await app.init();
-  });
-
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
   });
 
   it('POST /api/users', () => {
@@ -41,7 +34,7 @@ describe('AppController (e2e)', () => {
         const response = {
           user: {
             email: 'jake@jake.jake',
-            token: 'jwt.token.here',
+            token: expect.any(String),
             username: 'Jacob',
           },
         };

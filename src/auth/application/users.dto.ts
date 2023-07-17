@@ -12,8 +12,16 @@ class UserDto {
   password: string;
 }
 
-export class UserRegistrationDto {
+export class UserRegistrationRequestDto {
   @Type(() => UserDto)
   @ValidateNested()
   user: UserDto;
+}
+
+export class UserRegistrationResponseDto {
+  user: {
+    username: string;
+    email: string;
+    token: string;
+  };
 }
