@@ -3,13 +3,23 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { configure } from '../src/config/bootstrap';
 import { AuthModule } from '../src/auth/auth.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 describe('UsersController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AuthModule],
+      imports: [
+        AuthModule,
+        TypeOrmModule.forRoot({
+          type: 'better-sqlite3',
+          database: ':memory:',
+          dropSchema: true,
+          autoLoadEntities: true,
+          synchronize: true,
+        }),
+      ],
     }).compile();
 
     app = moduleFixture.createNestApplication();

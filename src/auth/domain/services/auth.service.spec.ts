@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
-import { InMemoryUsersRepository } from '../../infrastructure/in-memory-users.repository';
+import { InMemoryUsersRepository } from './in-memory-users.repository';
 import { UsersRepository } from '../model/users.repository';
 import { UsernameIsTakenError } from '../model/errors/username-is-taken.error';
 import { EmailIsTakenError } from '../model/errors/email-is-taken.error';

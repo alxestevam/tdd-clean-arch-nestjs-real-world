@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { AuthService } from '../domain/services/auth.service';
-import { InMemoryUsersRepository } from '../infrastructure/in-memory-users.repository';
+import { InMemoryUsersRepository } from '../domain/services/in-memory-users.repository';
 
 describe('UsersController', () => {
   let controller: UsersController;
