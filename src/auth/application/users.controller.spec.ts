@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
-import { UsersService } from './domain/users.service';
-import { UsersInMemoryRepository } from './users-in-memory.repository';
+import { AuthService } from '../domain/auth.service';
+import { InMemoryUsersRepository } from '../infrastructure/in-memory-users.repository';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -10,8 +10,8 @@ describe('UsersController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
       providers: [
-        UsersService,
-        { provide: 'UsersRepository', useValue: UsersInMemoryRepository },
+        AuthService,
+        { provide: 'UsersRepository', useValue: InMemoryUsersRepository },
       ],
     }).compile();
 

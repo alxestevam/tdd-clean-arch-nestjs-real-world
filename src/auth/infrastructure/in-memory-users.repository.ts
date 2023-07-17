@@ -1,7 +1,7 @@
-import { User } from './domain/users.entity';
-import { UsersRepository } from './domain/users.repository';
+import { User } from '../domain/users.entity';
+import { UsersRepository } from '../domain/users.repository';
 
-export class UsersInMemoryRepository implements UsersRepository {
+export class InMemoryUsersRepository implements UsersRepository {
   usernameToUser: Record<string, User> = {};
   emailToUser: Record<string, User> = {};
 

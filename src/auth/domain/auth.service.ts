@@ -1,18 +1,25 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { UsersRepository } from './users.repository';
-import { RegisterUserDto } from '../register-user.dto';
+import { UserRegistrationRequest } from './user-registration.request';
 import { UsernameIsTakenError } from './errors/username-is-taken.error';
 import { EmailIsTakenError } from './errors/email-is-taken.error';
 import { PasswordIsMissingError } from './errors/password-is-missing.error';
+import { UserSignInRequest } from './user-sign-in.request';
 
 @Injectable()
-export class UsersService {
+export class AuthService {
   constructor(
     @Inject('UsersRepository')
     private readonly usersRepository: UsersRepository,
   ) {}
 
-  async register(dto: RegisterUserDto) {
+  async signIn(signInRequest: UserSignInRequest) {
+    return {
+      token: 'token',
+    };
+  }
+
+  async register(dto: UserRegistrationRequest) {
     await this.validateUsername(dto.username);
 
     await this.validateEmail(dto.email);

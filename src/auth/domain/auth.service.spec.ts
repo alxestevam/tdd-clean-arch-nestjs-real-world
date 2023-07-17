@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsersService } from './users.service';
-import { UsersInMemoryRepository } from '../users-in-memory.repository';
+import { AuthService } from './auth.service';
+import { InMemoryUsersRepository } from '../infrastructure/in-memory-users.repository';
 import { UsersRepository } from './users.repository';
-import { RegisterUserDto } from '../register-user.dto';
+import { UserRegistrationRequest } from './user-registration.request';
 import { UsernameIsTakenError } from './errors/username-is-taken.error';
 import { EmailIsTakenError } from './errors/email-is-taken.error';
 import { PasswordIsMissingError } from './errors/password-is-missing.error';
 
-describe('UsersService', () => {
-  let service: UsersService;
+describe('AuthService', () => {
+  let service: AuthService;
   let usersRepository: UsersRepository;
-  const user: RegisterUserDto = {
+  const user: UserRegistrationRequest = {
     username: 'Jacob',
     email: 'jake@jake.jake',
     password: 'jakejake',
@@ -19,17 +19,13 @@ describe('UsersService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        UsersService,
-        { provide: 'UsersRepository', useClass: UsersInMemoryRepository },
+        AuthService,
+        { provide: 'UsersRepository', useClass: InMemoryUsersRepository },
       ],
     }).compile();
 
-    service = module.get<UsersService>(UsersService);
+    service = module.get<AuthService>(AuthService);
     usersRepository = module.get<UsersRepository>('UsersRepository');
-  });
-
-  it('should be defined', () => {
-    expect(service).toBeDefined();
   });
 
   it('should register a user', async () => {
@@ -71,5 +67,16 @@ describe('UsersService', () => {
         password: undefined,
       }),
     ).rejects.toThrowError(PasswordIsMissingError);
+  });
+
+  it('should return a token in user sign-in', async () => {
+    const signInRequest = {
+      username: 'Jacob',
+      password: 'jakejake',
+    };
+
+    const user = await service.signIn(signInRequest);
+
+    expect(user).toHaveProperty('token');
   });
 });
