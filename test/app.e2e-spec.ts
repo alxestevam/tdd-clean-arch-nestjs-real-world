@@ -21,4 +21,29 @@ describe('AppController (e2e)', () => {
       .expect(200)
       .expect('Hello World!');
   });
+
+  it('POST /api/users', () => {
+    const body = {
+      user: {
+        username: 'Jacob',
+        email: 'jake@jake.jake',
+        password: 'jakejake',
+      },
+    };
+
+    return request(app.getHttpServer())
+      .post('/api/users')
+      .send(body)
+      .expect(201)
+      .expect((res) => {
+        const response = {
+          user: {
+            email: 'jake@jake.jake',
+            token: 'jwt.token.here',
+            username: 'Jacob',
+          },
+        };
+        expect(res.body.user).toEqual(expect.objectContaining(response.user));
+      });
+  });
 });
