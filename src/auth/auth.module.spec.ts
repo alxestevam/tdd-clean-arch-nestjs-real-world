@@ -3,39 +3,16 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { configure } from '../config/bootstrap';
 import { AuthModule } from './auth.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserRegistrationRequest } from './domain/services/user-registration.request';
 import { UserBuilder } from './domain/services/user.builder';
-import { User } from './domain/model/users.entity';
-
-const register = (app: INestApplication) => async (user: User) => {
-  const body: UserRegistrationRequest = {
-    email: user.email,
-    username: user.username,
-    password: user.password,
-  };
-
-  return request(app.getHttpServer())
-    .post('/api/users')
-    .send({ user: body })
-    .expect(201);
-};
+import { register } from '../test/register';
+import { TypeormSqliteModule } from '../test/typeorm-sqlite.module';
 
 describe('UsersController', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [
-        AuthModule,
-        TypeOrmModule.forRoot({
-          type: 'better-sqlite3',
-          database: ':memory:',
-          dropSchema: true,
-          autoLoadEntities: true,
-          synchronize: true,
-        }),
-      ],
+      imports: [AuthModule, TypeormSqliteModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
