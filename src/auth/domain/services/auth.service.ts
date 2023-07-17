@@ -24,6 +24,10 @@ export class AuthService {
       throw new InvalidCredentialsError();
     }
 
+    if (!user.passwordMatches(signInRequest.password)) {
+      throw new InvalidCredentialsError();
+    }
+
     return {
       user,
       token: this.createTokenFor(user),
@@ -33,18 +37,28 @@ export class AuthService {
   async register(
     dto: UserRegistrationRequest,
   ): Promise<UserRegistrationResponse> {
+    const user = this.userFrom(dto);
+
     await this.validateUsername(dto.username);
 
     await this.validateEmail(dto.email);
 
     await this.validatePassword(dto.password);
 
-    const user = await this.usersRepository.save(dto);
+    const saved = await this.usersRepository.save(user);
 
     return {
-      user,
+      user: saved,
       token: this.createTokenFor(user),
     };
+  }
+
+  private userFrom(dto: UserRegistrationRequest) {
+    const user = new User();
+    user.username = dto.username;
+    user.email = dto.email;
+    user.password = dto.password;
+    return user;
   }
 
   private createTokenFor(user: User) {

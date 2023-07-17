@@ -79,10 +79,20 @@ describe('AuthService', () => {
     expect(response).toHaveProperty('user');
   });
 
-  it('should throw an error if invalid credentials are provided', async () => {
+  it('should throw InvalidCredentialsError when trying to signIn with an unknown user', async () => {
     await expect(service.signIn(signInRequest)).rejects.toThrowError(
       InvalidCredentialsError,
     );
+  });
+
+  it('should throw InvalidCredentialsError when the password does not match', async () => {
+    await service.register(user);
+    await expect(
+      service.signIn({
+        ...signInRequest,
+        password: 'wrong password',
+      }),
+    ).rejects.toThrowError(InvalidCredentialsError);
   });
 
   it('should return a token in user registration', async () => {

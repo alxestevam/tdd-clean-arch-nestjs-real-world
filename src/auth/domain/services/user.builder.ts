@@ -27,6 +27,10 @@ export class UserBuilder {
   }
 
   build(): User {
-    return this.user;
+    const user = new User();
+    user.username = this.user.username;
+    user.email = this.user.email;
+    user.password = this.user.password;
+    return user;
   }
 }

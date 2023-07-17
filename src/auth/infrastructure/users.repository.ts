@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { User as UserEntity } from './user.entity';
+import { UserSchema as UserEntity } from './user.schema';
 import { UsersRepository } from '../domain/model/users.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../domain/model/users.entity';
@@ -7,7 +7,7 @@ import { User } from '../domain/model/users.entity';
 export class TypeOrmUsersRepository implements UsersRepository {
   constructor(
     @InjectRepository(UserEntity)
-    private readonly repo: Repository<UserEntity>,
+    private readonly repo: Repository<User>,
   ) {}
 
   findByEmail(email: string): Promise<User> {
