@@ -4,6 +4,7 @@ import {
   UserRegistrationRequestDto,
   UserRegistrationResponseDto,
 } from './users.dto';
+import { UserRegistrationResponse } from '../domain/user-registration.response';
 
 @Controller('users')
 export class UsersController {
@@ -13,12 +14,18 @@ export class UsersController {
   async register(
     @Body() dto: UserRegistrationRequestDto,
   ): Promise<UserRegistrationResponseDto> {
-    const { user, token } = await this.usersService.register(dto.user);
+    const response = await this.usersService.register(dto.user);
+    return this.mapFrom(response);
+  }
+
+  private mapFrom(
+    response: UserRegistrationResponse,
+  ): UserRegistrationResponseDto | PromiseLike<UserRegistrationResponseDto> {
     return {
       user: {
-        email: user.email,
-        username: user.username,
-        token: token,
+        email: response.user.email,
+        username: response.user.username,
+        token: response.token,
       },
     };
   }

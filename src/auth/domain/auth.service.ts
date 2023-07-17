@@ -8,6 +8,7 @@ import { UserSignInRequest } from './user-sign-in.request';
 import { InvalidCredentialsError } from './errors/invalid-credentials.error';
 import { User } from './users.entity';
 import jwt from 'jsonwebtoken';
+import { UserRegistrationResponse } from './user-registration.response';
 
 @Injectable()
 export class AuthService {
@@ -30,7 +31,9 @@ export class AuthService {
     };
   }
 
-  async register(dto: UserRegistrationRequest) {
+  async register(
+    dto: UserRegistrationRequest,
+  ): Promise<UserRegistrationResponse> {
     await this.validateUsername(dto.username);
 
     await this.validateEmail(dto.email);
