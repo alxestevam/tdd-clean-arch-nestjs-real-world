@@ -1,5 +1,5 @@
-import { User } from '../domain/users.entity';
-import { UsersRepository } from '../domain/users.repository';
+import { User } from '../domain/model/users.entity';
+import { UsersRepository } from '../domain/model/users.repository';
 
 export class InMemoryUsersRepository implements UsersRepository {
   usernameToUser: Record<string, User> = {};

@@ -1,3 +1,5 @@
+import { User } from '../model/users.entity';
+
 export class UserBuilder {
   user = {
     username: 'username',
@@ -24,7 +26,7 @@ export class UserBuilder {
     return this;
   }
 
-  build() {
+  build(): User {
     return this.user;
   }
 }

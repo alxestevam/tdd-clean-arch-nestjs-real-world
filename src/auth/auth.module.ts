@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './domain/auth.service';
+import { AuthService } from './domain/services/auth.service';
 import { UsersController } from './application/users.controller';
 import { InMemoryUsersRepository } from './infrastructure/in-memory-users.repository';
 

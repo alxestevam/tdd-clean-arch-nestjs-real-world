@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UsersRepository } from './users.repository';
+import { UsersRepository } from '../model/users.repository';
 import { UserRegistrationRequest } from './user-registration.request';
-import { UsernameIsTakenError } from './errors/username-is-taken.error';
-import { EmailIsTakenError } from './errors/email-is-taken.error';
-import { PasswordIsMissingError } from './errors/password-is-missing.error';
+import { UsernameIsTakenError } from '../model/errors/username-is-taken.error';
+import { EmailIsTakenError } from '../model/errors/email-is-taken.error';
+import { PasswordIsMissingError } from '../model/errors/password-is-missing.error';
 import { UserSignInRequest } from './user-sign-in.request';
-import { InvalidCredentialsError } from './errors/invalid-credentials.error';
-import { User } from './users.entity';
+import { InvalidCredentialsError } from '../model/errors/invalid-credentials.error';
+import { User } from '../model/users.entity';
 import jwt from 'jsonwebtoken';
 import { UserRegistrationResponse } from './user-registration.response';
 

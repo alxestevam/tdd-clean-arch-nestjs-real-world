@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
-import { InMemoryUsersRepository } from '../infrastructure/in-memory-users.repository';
-import { UsersRepository } from './users.repository';
-import { UsernameIsTakenError } from './errors/username-is-taken.error';
-import { EmailIsTakenError } from './errors/email-is-taken.error';
-import { PasswordIsMissingError } from './errors/password-is-missing.error';
-import { UserBuilder } from './tests/user.builder';
-import { InvalidCredentialsError } from './errors/invalid-credentials.error';
+import { InMemoryUsersRepository } from '../../infrastructure/in-memory-users.repository';
+import { UsersRepository } from '../model/users.repository';
+import { UsernameIsTakenError } from '../model/errors/username-is-taken.error';
+import { EmailIsTakenError } from '../model/errors/email-is-taken.error';
+import { PasswordIsMissingError } from '../model/errors/password-is-missing.error';
+import { UserBuilder } from './user.builder';
+import { InvalidCredentialsError } from '../model/errors/invalid-credentials.error';
 import { isJWT } from 'class-validator';
 
 describe('AuthService', () => {
