@@ -14,7 +14,7 @@ describe('AuthService', () => {
   let usersRepository: UsersRepository;
   const user = UserBuilder.aUser().build();
   const signInRequest = {
-    username: 'username',
+    email: 'test@email.com',
     password: 'password',
   };
 
@@ -71,11 +71,12 @@ describe('AuthService', () => {
     ).rejects.toThrowError(PasswordIsMissingError);
   });
 
-  it('should return a token in user sign-in', async () => {
+  it('should return a token and a user in user sign-in', async () => {
     await service.register(user);
     const response = await service.signIn(signInRequest);
 
     expect(response).toHaveProperty('token');
+    expect(response).toHaveProperty('user');
   });
 
   it('should throw an error if invalid credentials are provided', async () => {

@@ -3,7 +3,7 @@ import { User } from '../model/users.entity';
 export class UserBuilder {
   user = {
     username: 'username',
-    email: 'email',
+    email: 'test@email.com',
     password: 'password',
   };
 

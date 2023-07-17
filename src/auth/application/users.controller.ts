@@ -3,6 +3,7 @@ import { AuthService } from '../domain/services/auth.service';
 import {
   UserRegistrationRequestDto,
   UserRegistrationResponseDto,
+  UserSignInRequestDto,
 } from './users.dto';
 import { UserRegistrationResponse } from '../domain/services/user-registration.response';
 
@@ -28,5 +29,13 @@ export class UsersController {
         token: response.token,
       },
     };
+  }
+
+  @Post('login')
+  async login(
+    @Body() dto: UserSignInRequestDto,
+  ): Promise<UserRegistrationResponseDto> {
+    const response = await this.usersService.signIn(dto.user);
+    return this.mapFrom(response);
   }
 }

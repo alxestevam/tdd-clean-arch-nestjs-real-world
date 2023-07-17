@@ -25,3 +25,17 @@ export class UserRegistrationResponseDto {
     token: string;
   };
 }
+
+export class UserCredentialsDto {
+  @IsDefined()
+  email: string;
+
+  @IsDefined()
+  password: string;
+}
+
+export class UserSignInRequestDto {
+  @Type(() => UserCredentialsDto)
+  @ValidateNested()
+  user: UserCredentialsDto;
+}

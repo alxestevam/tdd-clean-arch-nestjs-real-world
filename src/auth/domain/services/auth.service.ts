@@ -18,15 +18,14 @@ export class AuthService {
   ) {}
 
   async signIn(signInRequest: UserSignInRequest) {
-    const user = await this.usersRepository.findByUsername(
-      signInRequest.username,
-    );
+    const user = await this.usersRepository.findByEmail(signInRequest.email);
 
     if (!user) {
       throw new InvalidCredentialsError();
     }
 
     return {
+      user,
       token: this.createTokenFor(user),
     };
   }
