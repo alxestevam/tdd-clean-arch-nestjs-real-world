@@ -5,6 +5,7 @@ import { UsernameIsTakenError } from './errors/username-is-taken.error';
 import { EmailIsTakenError } from './errors/email-is-taken.error';
 import { PasswordIsMissingError } from './errors/password-is-missing.error';
 import { UserSignInRequest } from './user-sign-in.request';
+import { InvalidCredentialsError } from './errors/invalid-credentials.error';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +15,14 @@ export class AuthService {
   ) {}
 
   async signIn(signInRequest: UserSignInRequest) {
+    const user = await this.usersRepository.findByUsername(
+      signInRequest.username,
+    );
+
+    if (!user) {
+      throw new InvalidCredentialsError();
+    }
+
     return {
       token: 'token',
     };

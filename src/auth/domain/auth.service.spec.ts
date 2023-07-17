@@ -6,6 +6,7 @@ import { UserRegistrationRequest } from './user-registration.request';
 import { UsernameIsTakenError } from './errors/username-is-taken.error';
 import { EmailIsTakenError } from './errors/email-is-taken.error';
 import { PasswordIsMissingError } from './errors/password-is-missing.error';
+import { InvalidCredentialsError } from './errors/invalid-credentials.error';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -75,8 +76,20 @@ describe('AuthService', () => {
       password: 'jakejake',
     };
 
-    const user = await service.signIn(signInRequest);
+    await service.register(user);
+    const response = await service.signIn(signInRequest);
 
-    expect(user).toHaveProperty('token');
+    expect(response).toHaveProperty('token');
+  });
+
+  it('should throw an error if invalid credentials are provided', async () => {
+    const signInRequest = {
+      username: 'Jacob',
+      password: 'jakejake',
+    };
+
+    await expect(service.signIn(signInRequest)).rejects.toThrowError(
+      InvalidCredentialsError,
+    );
   });
 });
