@@ -1,0 +1,16 @@
+version: '3'
+services:
+  db:
+    image: mysql/mysql-server:8.0.26
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=realworld
+      - MYSQL_USER=realworld
+      - MYSQL_PASSWORD=realworld
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+volumes:
+  db-data:
