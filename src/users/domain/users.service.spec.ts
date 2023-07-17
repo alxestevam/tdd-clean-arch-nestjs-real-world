@@ -5,11 +5,16 @@ import { UsersRepository } from './users.repository';
 import { RegisterUserDto } from '../register-user.dto';
 import { UsernameIsTakenError } from './errors/username-is-taken.error';
 import { EmailIsTakenError } from './errors/email-is-taken.error';
+import { PasswordIsMissingError } from './errors/password-is-missing.error';
 
 describe('UsersService', () => {
   let service: UsersService;
   let usersRepository: UsersRepository;
-  let user: RegisterUserDto;
+  const user: RegisterUserDto = {
+    username: 'Jacob',
+    email: 'jake@jake.jake',
+    password: 'jakejake',
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -21,12 +26,6 @@ describe('UsersService', () => {
 
     service = module.get<UsersService>(UsersService);
     usersRepository = module.get<UsersRepository>('UsersRepository');
-
-    user = {
-      username: 'Jacob',
-      email: 'jake@jake.jake',
-      password: 'jakejake',
-    };
   });
 
   it('should be defined', () => {
@@ -63,5 +62,14 @@ describe('UsersService', () => {
         username: 'Another Jacob',
       }),
     ).rejects.toThrowError(EmailIsTakenError);
+  });
+
+  it('should throw an error if the user does not provide a password', async () => {
+    await expect(
+      service.register({
+        ...user,
+        password: undefined,
+      }),
+    ).rejects.toThrowError(PasswordIsMissingError);
   });
 });
