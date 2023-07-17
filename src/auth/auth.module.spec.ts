@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { configure } from '../src/config/bootstrap';
-import { AuthModule } from '../src/auth/auth.module';
+import { configure } from '../config/bootstrap';
+import { AuthModule } from './auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-describe('UsersController (e2e)', () => {
+describe('UsersController', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
