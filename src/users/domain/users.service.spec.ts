@@ -2,9 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { UsersInMemoryRepository } from '../users-in-memory.repository';
 import { UsersRepository } from './users.repository';
-import { async } from 'rxjs';
 import { RegisterUserDto } from '../register-user.dto';
-import { UsernameIsTakenError } from './username-is-taken.error';
+import { UsernameIsTakenError } from './errors/username-is-taken.error';
+import { EmailIsTakenError } from './errors/email-is-taken.error';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -54,5 +54,14 @@ describe('UsersService', () => {
     );
   });
 
-  it.todo('should throw an error if the email is taken');
+  it('should throw an error if the email is taken', async () => {
+    await service.register(user);
+
+    await expect(
+      service.register({
+        ...user,
+        username: 'Another Jacob',
+      }),
+    ).rejects.toThrowError(EmailIsTakenError);
+  });
 });
