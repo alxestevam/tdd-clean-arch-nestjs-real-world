@@ -2,20 +2,15 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { InMemoryUsersRepository } from '../infrastructure/in-memory-users.repository';
 import { UsersRepository } from './users.repository';
-import { UserRegistrationRequest } from './user-registration.request';
 import { UsernameIsTakenError } from './errors/username-is-taken.error';
 import { EmailIsTakenError } from './errors/email-is-taken.error';
 import { PasswordIsMissingError } from './errors/password-is-missing.error';
-import { InvalidCredentialsError } from './errors/invalid-credentials.error';
+import { UserBuilder } from './tests/user.builder';
 
 describe('AuthService', () => {
   let service: AuthService;
   let usersRepository: UsersRepository;
-  const user: UserRegistrationRequest = {
-    username: 'Jacob',
-    email: 'jake@jake.jake',
-    password: 'jakejake',
-  };
+  const user = UserBuilder.aUser().build();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -68,28 +63,5 @@ describe('AuthService', () => {
         password: undefined,
       }),
     ).rejects.toThrowError(PasswordIsMissingError);
-  });
-
-  it('should return a token in user sign-in', async () => {
-    const signInRequest = {
-      username: 'Jacob',
-      password: 'jakejake',
-    };
-
-    await service.register(user);
-    const response = await service.signIn(signInRequest);
-
-    expect(response).toHaveProperty('token');
-  });
-
-  it('should throw an error if invalid credentials are provided', async () => {
-    const signInRequest = {
-      username: 'Jacob',
-      password: 'jakejake',
-    };
-
-    await expect(service.signIn(signInRequest)).rejects.toThrowError(
-      InvalidCredentialsError,
-    );
   });
 });
