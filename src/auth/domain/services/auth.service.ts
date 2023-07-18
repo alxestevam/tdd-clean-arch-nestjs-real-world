@@ -37,13 +37,13 @@ export class AuthService {
   async register(
     dto: UserRegistrationRequest,
   ): Promise<UserRegistrationResponse> {
+    await this.validatePassword(dto.password);
+
     const user = this.userFrom(dto);
 
     await this.validateUsername(dto.username);
 
     await this.validateEmail(dto.email);
-
-    await this.validatePassword(dto.password);
 
     const saved = await this.usersRepository.save(user);
 
@@ -57,7 +57,7 @@ export class AuthService {
     const user = new User();
     user.username = dto.username;
     user.email = dto.email;
-    user.password = dto.password;
+    user.setPassword(dto.password);
     return user;
   }
 

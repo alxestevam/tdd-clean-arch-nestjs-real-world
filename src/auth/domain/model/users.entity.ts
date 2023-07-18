@@ -1,9 +1,15 @@
+import bcrypt from 'bcrypt';
+
 export class User {
   username: string;
   email: string;
   password: string;
 
   passwordMatches(password: string) {
-    return this.password === password;
+    return bcrypt.compareSync(password, this.password);
+  }
+
+  setPassword(password: string) {
+    this.password = bcrypt.hashSync(password, 10);
   }
 }

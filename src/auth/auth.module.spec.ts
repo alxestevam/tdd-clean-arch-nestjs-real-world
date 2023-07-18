@@ -3,7 +3,6 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { configure } from '../config/bootstrap';
 import { AuthModule } from './auth.module';
-import { UserBuilder } from './domain/services/user.builder';
 import { register } from '../test/register';
 import { TypeormSqliteModule } from '../test/typeorm-sqlite.module';
 
@@ -46,13 +45,16 @@ describe('UsersController', () => {
   });
 
   test('POST /api/users/login', async () => {
-    const user = UserBuilder.aUser().build();
-    await register(app)(user);
+    await register(app)({
+      username: 'username',
+      email: 'test@email.com',
+      password: 'password',
+    });
 
     const body = {
       user: {
-        email: user.email,
-        password: user.password,
+        email: 'test@email.com',
+        password: 'password',
       },
     };
 
