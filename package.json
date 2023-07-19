@@ -19,7 +19,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "spelunker": "dotenv -- nest start --entryFile tools/spelunker.js"
+    "spelunker": "dotenv -- nest start --entryFile tools/spelunker.js",
+    "depcruise:validate": "depcruise src --include-only '^src' --config --output-type err-long",
+    "depcruise:tree": "npx depcruise src --include-only '^src' --config --output-type ddot | dot -T svg > dependency-graph.svg && open dependency-graph.svg"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -56,6 +58,7 @@
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "dependency-cruiser": "^13.1.1",
     "dotenv-cli": "^7.2.1",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
