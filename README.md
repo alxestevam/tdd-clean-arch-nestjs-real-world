@@ -1,8 +1,12 @@
-# Conduit - NestJS Backend
+# Conduit - NestJS + TDD + Clean Architecture
 
 This repo is a backend implementation of Conduit. Built with NestJS applying Test-Driven Development (TDD) and Clean Architecture principles. This repository contains the backend part of the Conduit application.
 
 ![Dependency Graph](dependency-graph.svg)
+
+## Coverage
+
+[![codecov](https://codecov.io/github/alxestevam/tdd-clean-arch-nestjs-real-world/branch/main/graph/badge.svg?token=YYQYWAFNDK)](https://codecov.io/github/alxestevam/tdd-clean-arch-nestjs-real-world)
 
 ## Features
 
