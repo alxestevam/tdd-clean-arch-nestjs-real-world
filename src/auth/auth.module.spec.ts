@@ -72,4 +72,25 @@ describe('UsersController', () => {
         expect(res.body.user).toEqual(expect.objectContaining(response.user));
       });
   });
+
+  test('GET /api/user', async () => {
+    const user = await register(app)({
+      username: 'username',
+      email: 'test@email.com',
+      password: 'password',
+    });
+
+    return request(app.getHttpServer())
+      .get('/api/user')
+      .set('Authorization', `Token ${user.body.user.token}`)
+      .expect(200)
+      .expect((res) => {
+        const response = {
+          email: user.body.user.email,
+          token: expect.any(String),
+          username: user.body.user.username,
+        };
+        expect(res.body).toEqual(expect.objectContaining(response));
+      });
+  });
 });

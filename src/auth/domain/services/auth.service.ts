@@ -9,6 +9,7 @@ import { InvalidCredentialsError } from '../model/errors/invalid-credentials.err
 import { User } from '../model/users.entity';
 import jwt from 'jsonwebtoken';
 import { UserRegistrationResponse } from './user-registration.response';
+import { jwtConstants } from '../../../config/jwt';
 
 @Injectable()
 export class AuthService {
@@ -62,7 +63,7 @@ export class AuthService {
   }
 
   private createTokenFor(user: User) {
-    return jwt.sign({ sub: user.username }, 'secret');
+    return jwt.sign({ sub: user.username }, jwtConstants.secret);
   }
 
   private async validatePassword(password: string) {

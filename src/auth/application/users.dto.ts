@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer';
 import { IsDefined, IsEmail, ValidateNested } from 'class-validator';
 
-class UserDto {
+class UserRegistrationDto {
   @IsDefined()
   username: string;
 
@@ -15,7 +15,7 @@ class UserDto {
 export class UserRegistrationRequestDto {
   @Type(() => UserDto)
   @ValidateNested()
-  user: UserDto;
+  user: UserRegistrationDto;
 }
 
 export class UserRegistrationResponseDto {
@@ -38,4 +38,15 @@ export class UserSignInRequestDto {
   @Type(() => UserCredentialsDto)
   @ValidateNested()
   user: UserCredentialsDto;
+}
+
+export class UserDto {
+  email: string;
+  username: string;
+  token: string;
+}
+
+export interface AuthenticatedUser {
+  username: string;
+  token: string;
 }
