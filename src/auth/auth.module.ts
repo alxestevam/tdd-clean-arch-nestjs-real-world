@@ -8,8 +8,8 @@ import { UserController } from './application/user.controller';
 import { JwtStrategy } from './application/jwt.strategy';
 import { DefaultAuthGuard } from './application/auth.guard';
 import constants from './constants';
-import { UserApplicationService } from './application/user.application.service';
-import { AuthApplicationService } from './application/auth.application.service';
+import { UsersRepository } from './domain/model/users.repository';
+import { UserService } from './domain/services/user.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserSchema])],
@@ -17,9 +17,22 @@ import { AuthApplicationService } from './application/auth.application.service';
   providers: [
     JwtStrategy,
     DefaultAuthGuard,
-    { provide: constants.AuthService, useClass: AuthApplicationService },
-    { provide: constants.UsersRepository, useClass: TypeOrmUsersRepository },
-    { provide: constants.UserService, useClass: UserApplicationService },
+    {
+      provide: constants.UsersRepository,
+      useClass: TypeOrmUsersRepository,
+    },
+    {
+      provide: constants.AuthService,
+      useFactory: (usersRepository: UsersRepository) =>
+        new AuthService(usersRepository),
+      inject: [constants.UsersRepository],
+    },
+    {
+      provide: constants.UserService,
+      useFactory: (usersRepository: UsersRepository) =>
+        new UserService(usersRepository),
+      inject: [constants.UsersRepository],
+    },
   ],
 })
 export class AuthModule {}
