@@ -6,7 +6,7 @@ import { register } from './register';
 import { TypeormSqliteModule } from '../../__tests__/typeorm-sqlite.module';
 import { configure } from '../../bootstrap';
 
-describe('UsersController', () => {
+describe('AuthModule', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
