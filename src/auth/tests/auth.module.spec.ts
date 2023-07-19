@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { configure } from '../config/bootstrap';
-import { AuthModule } from './auth.module';
-import { register } from '../test/register';
-import { TypeormSqliteModule } from '../test/typeorm-sqlite.module';
+import { AuthModule } from '../auth.module';
+import { register } from './register';
+import { TypeormSqliteModule } from '../../tests/typeorm-sqlite.module';
+import { configure } from '../../bootstrap';
 
 describe('UsersController', () => {
   let app: INestApplication;
@@ -13,10 +13,13 @@ describe('UsersController', () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AuthModule, TypeormSqliteModule],
     }).compile();
-
     app = moduleFixture.createNestApplication();
     configure(app);
     await app.init();
+  });
+
+  test('POST /api/users should return 400 if no user is provided', () => {
+    return request(app.getHttpServer()).post('/api/users').expect(400);
   });
 
   test('POST /api/users', () => {
@@ -71,6 +74,10 @@ describe('UsersController', () => {
         };
         expect(res.body.user).toEqual(expect.objectContaining(response.user));
       });
+  });
+
+  test('GET /api/user should return 401 if no token is provided', async () => {
+    return request(app.getHttpServer()).get('/api/user').expect(401);
   });
 
   test('GET /api/user', async () => {

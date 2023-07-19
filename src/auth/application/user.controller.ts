@@ -14,7 +14,7 @@ import { AuthenticatedUser, CurrentUser } from './user.decorator';
 import { DefaultAuthGuard } from './auth.guard';
 import Express from 'express';
 import { ExtractJwt } from 'passport-jwt';
-import constants from '../constants';
+import constants from '../infrastructure/config/constants';
 import { UserService } from '../domain/services/user.service';
 import { UserUpdateRequest } from '../domain/services/user-update.request';
 

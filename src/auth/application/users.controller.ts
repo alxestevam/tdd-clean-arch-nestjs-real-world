@@ -6,7 +6,7 @@ import {
   UserSignInRequestDto,
 } from './users.dto';
 import { UserRegistrationResponse } from '../domain/services/user-registration.response';
-import constants from '../constants';
+import constants from '../infrastructure/config/constants';
 
 @Controller('users')
 export class UsersController {

@@ -22,6 +22,7 @@ class UserRegistrationDto {
 export class UserRegistrationRequestDto {
   @Type(() => UserDto)
   @ValidateNested()
+  @IsDefined()
   user: UserRegistrationDto;
 }
 

@@ -1,6 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { UserRegistrationRequest } from '../auth/domain/services/user-registration.request';
+import { UserRegistrationRequest } from '../domain/services/user-registration.request';
 
 export const register =
   (app: INestApplication) => async (req: UserRegistrationRequest) => {

@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './domain/services/auth.service';
 import { UsersController } from './application/users.controller';
-import { TypeOrmUsersRepository } from './infrastructure/users.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserSchema } from './infrastructure/user.schema';
+import { UserSchema } from './infrastructure/data/user.schema';
 import { UserController } from './application/user.controller';
 import { JwtStrategy } from './application/jwt.strategy';
 import { DefaultAuthGuard } from './application/auth.guard';
-import constants from './constants';
+import constants from './infrastructure/config/constants';
 import { UsersRepository } from './domain/model/users.repository';
 import { UserService } from './domain/services/user.service';
-import jwtConfig from '../config/jwt';
+import jwtConfig from './infrastructure/config/jwt';
+import { TypeOrmUsersRepository } from './infrastructure/data/users.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserSchema])],
@@ -18,6 +18,7 @@ import jwtConfig from '../config/jwt';
   providers: [
     JwtStrategy,
     DefaultAuthGuard,
+
     {
       provide: constants.UsersRepository,
       useClass: TypeOrmUsersRepository,
