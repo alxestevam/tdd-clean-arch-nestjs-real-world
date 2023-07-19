@@ -1,8 +1,6 @@
-import { TestingModule, Test } from '@nestjs/testing';
 import { UsersRepository } from '../model/users.repository';
 import { AuthService } from './auth.service';
 import { InMemoryUsersRepository } from './in-memory-users.repository';
-import constants from '../constants';
 import { UserService } from './user.service';
 import { UserUpdateRequest } from './user-update.request';
 
@@ -12,20 +10,9 @@ describe('UserService', () => {
   let usersRepository: UsersRepository;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        AuthService,
-        UserService,
-        {
-          provide: constants.UsersRepository,
-          useClass: InMemoryUsersRepository,
-        },
-      ],
-    }).compile();
-
-    authService = module.get<AuthService>(AuthService);
-    service = module.get<UserService>(UserService);
-    usersRepository = module.get<UsersRepository>(constants.UsersRepository);
+    usersRepository = new InMemoryUsersRepository();
+    service = new UserService(usersRepository);
+    authService = new AuthService(usersRepository);
   });
 
   it.each([

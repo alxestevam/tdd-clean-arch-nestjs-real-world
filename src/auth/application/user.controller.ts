@@ -14,7 +14,7 @@ import { AuthenticatedUser, CurrentUser } from './user.decorator';
 import { DefaultAuthGuard } from './auth.guard';
 import Express from 'express';
 import { ExtractJwt } from 'passport-jwt';
-import constants from '../domain/constants';
+import constants from '../constants';
 import { UserService } from '../domain/services/user.service';
 import { UserUpdateRequest } from '../domain/services/user-update.request';
 
@@ -23,6 +23,7 @@ export class UserController {
   constructor(
     @Inject(constants.UsersRepository)
     private readonly usersRepository: UsersRepository,
+    @Inject(constants.UserService)
     private readonly userService: UserService,
   ) {}
 
