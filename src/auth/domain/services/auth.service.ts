@@ -8,10 +8,16 @@ import { InvalidCredentialsError } from '../model/errors/invalid-credentials.err
 import { User } from '../model/users.entity';
 import jwt from 'jsonwebtoken';
 import { UserRegistrationResponse } from './user-registration.response';
-import { jwtConstants } from '../../../config/jwt';
+
+export interface JwtConfig {
+  secret: string;
+}
 
 export class AuthService {
-  constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(
+    private readonly usersRepository: UsersRepository,
+    private readonly jwtConfig: JwtConfig,
+  ) {}
 
   async signIn(signInRequest: UserSignInRequest) {
     const user = await this.usersRepository.findByEmail(signInRequest.email);
@@ -58,7 +64,7 @@ export class AuthService {
   }
 
   private createTokenFor(user: User) {
-    return jwt.sign({ sub: user.username }, jwtConstants.secret);
+    return jwt.sign({ sub: user.username }, this.jwtConfig.secret);
   }
 
   private async validatePassword(password: string) {

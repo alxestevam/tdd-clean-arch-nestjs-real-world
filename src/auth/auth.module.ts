@@ -10,6 +10,7 @@ import { DefaultAuthGuard } from './application/auth.guard';
 import constants from './constants';
 import { UsersRepository } from './domain/model/users.repository';
 import { UserService } from './domain/services/user.service';
+import jwtConfig from '../config/jwt';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserSchema])],
@@ -24,7 +25,7 @@ import { UserService } from './domain/services/user.service';
     {
       provide: constants.AuthService,
       useFactory: (usersRepository: UsersRepository) =>
-        new AuthService(usersRepository),
+        new AuthService(usersRepository, jwtConfig),
       inject: [constants.UsersRepository],
     },
     {

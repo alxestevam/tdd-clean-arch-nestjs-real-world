@@ -5,6 +5,9 @@ import { UserService } from './user.service';
 import { UserUpdateRequest } from './user-update.request';
 
 describe('UserService', () => {
+  const jwtConfig = {
+    secret: 'secretKey',
+  };
   let service: UserService;
   let authService: AuthService;
   let usersRepository: UsersRepository;
@@ -12,7 +15,7 @@ describe('UserService', () => {
   beforeEach(async () => {
     usersRepository = new InMemoryUsersRepository();
     service = new UserService(usersRepository);
-    authService = new AuthService(usersRepository);
+    authService = new AuthService(usersRepository, jwtConfig);
   });
 
   it.each([

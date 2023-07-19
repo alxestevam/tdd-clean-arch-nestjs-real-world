@@ -8,6 +8,7 @@ import { InvalidCredentialsError } from '../model/errors/invalid-credentials.err
 import { isJWT } from 'class-validator';
 
 describe('AuthService', () => {
+  const jwtConfig = { secret: 'secretKey' };
   let service: AuthService;
   let usersRepository: UsersRepository;
   const userRegistrationRequest = {
@@ -23,7 +24,7 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     usersRepository = new InMemoryUsersRepository();
-    service = new AuthService(usersRepository);
+    service = new AuthService(usersRepository, jwtConfig);
   });
 
   it('should register a user', async () => {

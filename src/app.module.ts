@@ -4,6 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { mysqlConfig } from './config/typeorm';
 
 @Module({
-  imports: [AuthModule, TypeOrmModule.forRoot(mysqlConfig)],
+  imports: [TypeOrmModule.forRoot(mysqlConfig), AuthModule],
 })
 export class AppModule {}
