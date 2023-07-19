@@ -10,11 +10,12 @@ import { User } from '../model/users.entity';
 import jwt from 'jsonwebtoken';
 import { UserRegistrationResponse } from './user-registration.response';
 import { jwtConstants } from '../../../config/jwt';
+import constants from '../constants';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @Inject('UsersRepository')
+    @Inject(constants.UsersRepository)
     private readonly usersRepository: UsersRepository,
   ) {}
 

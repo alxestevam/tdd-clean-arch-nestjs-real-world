@@ -83,6 +83,11 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/src/main.ts",
+      "/src/app.module.ts",
+      "/src/config/typeorm.ts"
+    ]
   }
 }

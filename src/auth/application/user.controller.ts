@@ -6,11 +6,12 @@ import { AuthenticatedUser, CurrentUser } from './user.decorator';
 import { DefaultAuthGuard } from './auth.guard';
 import Express from 'express';
 import { ExtractJwt } from 'passport-jwt';
+import constants from '../domain/constants';
 
 @Controller('user')
 export class UserController {
   constructor(
-    @Inject('UsersRepository')
+    @Inject(constants.UsersRepository)
     private readonly usersRepository: UsersRepository,
   ) {}
 
@@ -25,10 +26,10 @@ export class UserController {
     const user = await this.usersRepository.findByUsername(
       authenticatedUser.sub,
     );
-    return this.mapUserFrom(user, token);
+    return this.mapFrom(user, token);
   }
 
-  private mapUserFrom(user: User, token: string): UserDto {
+  private mapFrom(user: User, token: string): UserDto {
     return {
       email: user.email,
       username: user.username,
