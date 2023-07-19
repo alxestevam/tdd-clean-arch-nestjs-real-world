@@ -93,4 +93,26 @@ describe('UsersController', () => {
         expect(res.body).toEqual(expect.objectContaining(response));
       });
   });
+
+  test('PUT /api/user', async () => {
+    const updateUserRequest = {
+      user: {
+        email: 'jake@jake.jake',
+        bio: 'I like to skateboard',
+        image: 'https://i.stack.imgur.com/xHWG8.jpg',
+      },
+    };
+
+    const user = await register(app)({
+      username: 'username',
+      email: updateUserRequest.user.email,
+      password: 'password',
+    });
+
+    return request(app.getHttpServer())
+      .put('/api/user')
+      .set('Authorization', `Token ${user.body.user.token}`)
+      .send(updateUserRequest)
+      .expect(200);
+  });
 });

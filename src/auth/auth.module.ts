@@ -7,6 +7,7 @@ import { UserSchema } from './infrastructure/user.schema';
 import { UserController } from './application/user.controller';
 import { JwtStrategy } from './application/jwt.strategy';
 import { DefaultAuthGuard } from './application/auth.guard';
+import { UserService } from './domain/services/user.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserSchema])],
@@ -16,6 +17,7 @@ import { DefaultAuthGuard } from './application/auth.guard';
     { provide: 'UsersRepository', useClass: TypeOrmUsersRepository },
     JwtStrategy,
     DefaultAuthGuard,
+    UserService,
   ],
 })
 export class AuthModule {}

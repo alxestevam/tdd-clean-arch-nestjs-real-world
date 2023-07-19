@@ -1,5 +1,12 @@
 import { Type } from 'class-transformer';
-import { IsDefined, IsEmail, ValidateNested } from 'class-validator';
+import {
+  IsDefined,
+  IsEmail,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { UserUpdateRequest } from '../domain/services/user-update.request';
 
 class UserRegistrationDto {
   @IsDefined()
@@ -49,4 +56,26 @@ export class UserDto {
 export interface AuthenticatedUser {
   username: string;
   token: string;
+}
+
+export class UpdateUserDto implements UserUpdateRequest {
+  @IsOptional()
+  @IsEmail()
+  email?: string;
+
+  @IsOptional()
+  @IsString()
+  username?: string;
+
+  @IsOptional()
+  @IsString()
+  password?: string;
+
+  @IsOptional()
+  @IsString()
+  image?: string;
+
+  @IsOptional()
+  @IsString()
+  bio?: string;
 }
