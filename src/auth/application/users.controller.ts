@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
 import { AuthService } from '../domain/services/auth.service';
 import {
   UserRegistrationRequestDto,
@@ -6,10 +6,14 @@ import {
   UserSignInRequestDto,
 } from './users.dto';
 import { UserRegistrationResponse } from '../domain/services/user-registration.response';
+import constants from '../constants';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: AuthService) {}
+  constructor(
+    @Inject(constants.AuthService)
+    private readonly usersService: AuthService,
+  ) {}
 
   @Post()
   async register(

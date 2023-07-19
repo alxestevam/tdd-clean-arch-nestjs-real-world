@@ -1,4 +1,3 @@
-import { Inject, Injectable } from '@nestjs/common';
 import { UsersRepository } from '../model/users.repository';
 import { UserRegistrationRequest } from './user-registration.request';
 import { UsernameIsTakenError } from '../model/errors/username-is-taken.error';
@@ -10,14 +9,9 @@ import { User } from '../model/users.entity';
 import jwt from 'jsonwebtoken';
 import { UserRegistrationResponse } from './user-registration.response';
 import { jwtConstants } from '../../../config/jwt';
-import constants from '../../constants';
 
-@Injectable()
 export class AuthService {
-  constructor(
-    @Inject(constants.UsersRepository)
-    private readonly usersRepository: UsersRepository,
-  ) {}
+  constructor(private readonly usersRepository: UsersRepository) {}
 
   async signIn(signInRequest: UserSignInRequest) {
     const user = await this.usersRepository.findByEmail(signInRequest.email);
