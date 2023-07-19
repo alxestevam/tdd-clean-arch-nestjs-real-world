@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AuthModule } from '../auth.module';
 import { register } from './register';
-import { TypeormSqliteModule } from '../../tests/typeorm-sqlite.module';
+import { TypeormSqliteModule } from '../../__tests__/typeorm-sqlite.module';
 import { configure } from '../../bootstrap';
 
 describe('UsersController', () => {
